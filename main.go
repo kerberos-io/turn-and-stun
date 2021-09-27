@@ -27,7 +27,6 @@ func (s *stunLogger) WriteTo(p []byte, addr net.Addr) (n int, err error) {
 
 		fmt.Printf("Outbound STUN: %s \n", msg.String())
 	}
-
 	return
 }
 
@@ -45,11 +44,6 @@ func (s *stunLogger) ReadFrom(p []byte) (n int, addr net.Addr, err error) {
 }
 
 func main() {
-	//publicIP := flag.String("public-ip", "", "IP Address that TURN can be contacted by.")
-	//port := flag.Int("port", 3478, "Listening port.")
-	//users := flag.String("users", "", "List of username and password (e.g. \"user=pass,user=pass\")")
-	//realm := flag.String("realm", "pion.ly", "Realm (defaults to \"pion.ly\")")
-
 	publicIP := os.Getenv("KERBEROS_TURN_PUBLIC_IP") //"192.168.86.175"
 	users := os.Getenv("KERBEROS_TURN_USERS") //"username1=password1"
 	port := os.Getenv("KERBEROS_TURN_PORT") //"443"
@@ -61,13 +55,23 @@ func main() {
 		log.Fatalf("'users' is required")
 	}
 
-	// Create a UDP listener to pass into pion/turn
-	// pion/turn itself doesn't allocate any UDP sockets, but lets the user pass them in
+	// Create a TCP listener to pass into pion/turn
+	// pion/turn itself doesn't allocate any TCP listeners, but lets the user pass them in
 	// this allows us to add logging, storage or modify inbound/outbound traffic
 	tcpListener, err := net.Listen("tcp4", "0.0.0.0:"+port)
 	if err != nil {
 		log.Panicf("Failed to create TURN server listener: %s", err)
 	}
+
+	// Or if you want toCreate a UDP listener to pass into pion/turn
+	// pion/turn itself doesn't allocate any UDP sockets, but lets the user pass them in
+	// this allows us to add logging, storage or modify inbound/outbound traffic
+	// --- (UNCOMMENT BELOW) ---
+	// udpListener, err := net.ListenPacket("udp4", "0.0.0.0:"+strconv.Itoa(*port))
+	// if err != nil {
+	//   log.Panicf("Failed to create TURN server listener: %s", err)
+	// }
+
 
 	// Cache -users flag for easy lookup later
 	// If passwords are stored they should be saved to your DB hashed using turn.GenerateAuthKey
@@ -94,8 +98,8 @@ func main() {
 				RelayAddressGenerator: &turn.RelayAddressGeneratorStatic{
 					RelayAddress: net.ParseIP(publicIP),
 					Address:      "0.0.0.0",
-					//MinPort:      50000,
-					//MaxPort:      55000,
+					//MinPort:      50000,  // If using UDP listener, you can specify the lower range of ports.
+					//MaxPort:      55000,	// If using UDP listener, you can specify the upper range of ports.
 				},
 			},
 		},
