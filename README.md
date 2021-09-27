@@ -1,4 +1,4 @@
-# Turn and Stun
+# TURN and STUN
 
 This project is based on the [Pion Turn project](https://github.com/pion/turn), which is an API to create a custom TURN/STUN server and allows you to add authentication, middleware, logging, etc features. 
 
