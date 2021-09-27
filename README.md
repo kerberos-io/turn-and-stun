@@ -34,5 +34,7 @@ By using the environment option `-e KERBEROS..` you can specify the public IP of
 Some open tasks to be taken care of.
 
 -[x] Add UDP example in existing code.
+ 
 -[x] Make credentials, public ip, port configurable through environment variables
+ 
 -[ ] This projects works by enabling `HOST_NETWORK` on the container creation with Docker, but it doesn't work properly when scheduled in a Kubernetes cluster. 
