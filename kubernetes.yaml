@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kerberos-turn
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kerberos-turn
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: kerberos-turn
+    spec:
+      hostNetwork: true
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: kerberos-turn
+          image: registry.gitlab.com/kerberos-io/turn:1.0.951040586
+          env:
+            - name: KERBEROS_TURN_PUBLIC_IP
+              value: "185.3.92.181"
+            - name: KERBEROS_TURN_USERS
+              value: "username1=password1"
+            - name: KERBEROS_TURN_PORT
+              value: "1024"
+            - name: KERBEROS_TURN_REALM
+              value: "kerberos.io"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kerberos-turn-svc
+spec:
+  selector:
+    app: kerberos-turn
+  ports:
+    - port: 1024
+      targetPort: 1024
+  type: LoadBalancer
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: kerberos-turn-svc
+#  labels:
+#    app: kerberos-turn-svc
+#spec:
+#  ports:
+#    - protocol: TCP
+#      port: 443
+#      targetPort: 4443
+#      name: http
+#  selector:
+#    app: kerberos-turn
+#---
+#apiVersion: extensions/v1beta1
+#kind: Ingress
+#metadata:
+#  name: kerberos-turn-ingress
+#  annotations:
+#    kubernetes.io/ingress.class: traefik
+#spec:
+#  rules:
+#    - host: turn.kerberos.io
+#      http:
+#        paths:
+#          - path: /
+#            backend:
+#              serviceName: kerberos-turn-svc
+#              servicePort: 4443
