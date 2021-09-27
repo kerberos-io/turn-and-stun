@@ -2,7 +2,7 @@
 
 This project is based on the [Pion Turn project](https://github.com/pion/turn), which is an API to create a custom TURN/STUN server and allows you to add authentication, middleware, logging, etc features. 
 
-We are using a TURN and STUN server in our Kerberos Enterprise Suite offering to connect Kerberos Agents, living at the edge, to a remote Kerberos Hub. Livestreams are being forwarded from the edge to the cloud using WebRTC, and therefore relevant services such as TURN and STUN are leveraged.
+We are using a TURN and STUN server in our Kerberos Enterprise Suite offering to connect Kerberos Agents, living at the edge, to a remote Kerberos Hub. Livestreams are being forwarded (without port-forwarding enabled) from the edge to the cloud using WebRTC, and therefore relevant services such as TURN and STUN are leveraged.
 
 # Dockerized
 
