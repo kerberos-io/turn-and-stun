@@ -8,6 +8,8 @@ We are using a TURN and STUN server in our Kerberos Enterprise Suite offering to
 
 Within Kerberos.io we are containerizing everything, so we can to simplify release management, deployments and scalability. We took the opportunity to create a Docker container that runs the [Pion Turn project](https://github.com/pion/turn) and make it configurable through environment variables. This helps us to deploy a TURN/STUN server more easily in different types of environments. 
 
+![TURN STUN Architecture](images/TURN STUN Architecture.png)
+
 # How to run
 
 You can build this container yourself by or download it from our Docker registry @ gitlab.
