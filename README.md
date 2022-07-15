@@ -19,7 +19,7 @@ You can build this container yourself by or download it from our Docker registry
 Or to pull from our registry; you will need to obtain some registry credentials from the Kerberos.io team.
 
     docker login https://registry.gitlab.com
-    docker pull registry.gitlab.com/kerberos-io/turn:1.0.951040586
+    docker pull kerberos/turn-stun:1.0.2727592447
 
 When the image is properly build or pulled, you can run the container as following. What is key here is the `--network host` option, this is required to allow the allocation of TURN ports on the host machine. These ports are needed to proxy traffic from the Kerberos Agent to a Kerberos Hub viewer. 
 
@@ -29,7 +29,7 @@ By using the environment option `-e KERBEROS..` you can specify the public IP of
     -e KERBEROS_TURN_USERS="username1=password1" \ 
     -e KERBEROS_TURN_PORT="8443" \ 
     -e KERBEROS_TURN_REALM="kerberos.io" \ 
-    --network host registry.gitlab.com/kerberos-io/turn:1.0.951040586
+    --network host kerberos/turn-stun:1.0.2727592447
 
 ## TODO
 
