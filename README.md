@@ -29,6 +29,7 @@ By using the environment option `-e KERBEROS..` you can specify the public IP of
     -e KERBEROS_TURN_USERS="username1=password1" \ 
     -e KERBEROS_TURN_PORT="8443" \ 
     -e KERBEROS_TURN_REALM="kerberos.io" \ 
+    -d --restart always \ 
     --network host kerberos/turn-stun:1.0.2727592447
 
 ## TODO
