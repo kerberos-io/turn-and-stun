@@ -19,11 +19,9 @@ spec:
         app: kerberos-turn
     spec:
       hostNetwork: true
-      imagePullSecrets:
-        - name: regcred
       containers:
         - name: kerberos-turn
-          image: registry.gitlab.com/kerberos-io/turn:1.0.951040586
+          image: kerberos/turn-stun:1.0.2732231355
           env:
             - name: KERBEROS_TURN_PUBLIC_IP
               value: "185.3.92.181"
